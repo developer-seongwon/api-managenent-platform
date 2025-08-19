@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(name = "회원 계정 정보")
-class Account(
+data class Account(
     @Schema(name = "회원 아이디")
     val id: String? = null,
     @Schema(name = "회원 이름")

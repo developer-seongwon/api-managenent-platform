@@ -1,16 +1,19 @@
 package org.sw.api.sample.api.user.repository
 
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Repository
 import org.sw.api.sample.api.user.node.Account
+import org.sw.api.sample.api.user.repository.dao.UserDao
 import org.sw.api.sample.api.user.repository.entity.UserEntity
 
 @Repository
 class UserRepository(
-    val container: MutableList<UserEntity> = mutableListOf()
+    val userDao: UserDao,
+    val container: MutableList<UserEntity>
 ) {
 
-    fun readUserInRepository(): List<UserEntity> {
-        return this.container
+    fun findUserInRepository(): List<UserEntity> {
+        return this.userDao.findAll();
     }
 
     fun readUserByFilterInRepository(filter: Account?): List<UserEntity> {
@@ -27,8 +30,8 @@ class UserRepository(
         return this.container.find { it.id == id }
     }
 
-    fun createUserInRepository(user: UserEntity): Int {
-        return this.container.find { it.id == user.id }?.let { 0 } ?: this.container.add(user).let { 1 }
+    fun createUserInRepository(user: UserEntity): UserEntity {
+        return this.userDao.save(user)
     }
 
 

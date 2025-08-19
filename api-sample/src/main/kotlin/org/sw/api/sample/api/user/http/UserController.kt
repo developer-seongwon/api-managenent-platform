@@ -24,66 +24,52 @@ class UserController(
 
     @GetMapping
     override fun readUser(): ResponseEntity<UserReadResponse> {
-        ProblemDetail
-        return this.service.readUsers().let { it ->
-            when (it.status) {
-                200 -> ResponseEntity.status(200)
-                    .contentType(APPLICATION_JSON)
-                    .body(UserReadResponse(accounts = it.result))
-                else -> ResponseEntity.status(it.status)
-                    .contentType(MediaType.APPLICATION_PROBLEM_JSON)
-                    .body(UserReadResponse(Probl))
-            }
-            ResponseEntity.status(it.status)
-                .contentType(APPLICATION_JSON)
-                .body(UserReadResponse(accounts = it.result))
-        }
+        return this.service.readUsers()
+            .let { it -> ResponseEntity.status(200).contentType(APPLICATION_JSON).body(UserReadResponse(accounts = it)) }
     }
 
-    @PostMapping
-    override fun readUser(request: UserReadRequest): ResponseEntity<UserReadResponse> {
-        return this.service.readUsers(account = request.account).let { it ->
-            ResponseEntity.status(it.status)
-            .contentType(APPLICATION_JSON)
-            .body(with(it) {
-                when (status) {
-                    200 -> UserReadResponse(accounts = result)
-                    else -> UserReadResponse(accounts = result)
-                }
-            })
-//            }.statusUserReadResponse(accounts = it.result))
-//            else -> ResponseEntity.status(it.status)
+//    @PostMapping
+//    override fun readUser(request: UserReadRequest): ResponseEntity<UserReadResponse> {
+//        return this.service.readUsers(account = request.account).let { it ->
+//            ResponseEntity.status(it.status)
 //            .contentType(APPLICATION_JSON)
-//            .body(UserReadResponse(accounts = it.result))
-//            when (it.status) {
-//                200 ->  ResponseEntity.status(it.status)
-//                    .contentType(APPLICATION_JSON)
-//                    .body(UserReadResponse(accounts = it.result))
-//                else -> ResponseEntity.status(it.status)
-//                    .contentType(APPLICATION_JSON)
-//                    .body(UserReadResponse(accounts = it.result))
-//            }
-        }
-    }
+//            .body(with(it) {
+//                when (status) {
+//                    200 -> UserReadResponse(accounts = result)
+//                    else -> UserReadResponse(accounts = result)
+//                }
+//            })
+////            }.statusUserReadResponse(accounts = it.result))
+////            else -> ResponseEntity.status(it.status)
+////            .contentType(APPLICATION_JSON)
+////            .body(UserReadResponse(accounts = it.result))
+////            when (it.status) {
+////                200 ->  ResponseEntity.status(it.status)
+////                    .contentType(APPLICATION_JSON)
+////                    .body(UserReadResponse(accounts = it.result))
+////                else -> ResponseEntity.status(it.status)
+////                    .contentType(APPLICATION_JSON)
+////                    .body(UserReadResponse(accounts = it.result))
+////            }
+//        }
+//    }
+//
+//    @GetMapping("/{id}")
+//    override fun readUser(id: String): ResponseEntity<UserReadResponse> {
+//        return this.service.readUser(Account(id)).let { it ->
+//            ResponseEntity.status(it.status)
+//                .contentType(APPLICATION_JSON)
+//                .body(UserReadResponse(account = it.result))
+//        }
+//    }
 
-    @GetMapping("/{id}")
-    override fun readUser(id: String): ResponseEntity<UserReadResponse> {
-        return this.service.readUser(Account(id)).let { it ->
-            ResponseEntity.status(it.status)
-                .contentType(APPLICATION_JSON)
-                .body(UserReadResponse(account = it.result))
-        }
-    }
-
-
-    @PostMapping()
-    override fun createUser(id: String, request: UserCreateRequest): UserCreateResponse {
+    @PostMapping("/{id}")
+    override fun createUser(id: String, request: UserCreateRequest): ResponseEntity<UserCreateResponse> {
         return Account(id, request.account.name, request.account.age)
             .let { it -> this.service.createUser(it) }
-            .let { it ->
-                ResponseEntity.status(it.status)
+            .let { it -> ResponseEntity.status(200)
                     .contentType(APPLICATION_JSON)
-                    .body(it.result)
+                    .body(UserCreateResponse(account = it))
             }
     }
 }
