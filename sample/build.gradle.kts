@@ -30,6 +30,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     // https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations
     implementation("io.swagger.core.v3:swagger-annotations:2.2.36")
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.10")
 
     runtimeOnly("com.h2database:h2")
 
