@@ -7,5 +7,5 @@ import org.sw.sample.api.user.repository.entity.UserEntity
 @Repository
 interface UserDao: JpaRepository<UserEntity, String>{
 
-    fun findByFilter(filter: UserEntity): List<UserEntity>
+    
 }

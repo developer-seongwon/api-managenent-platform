@@ -12,13 +12,11 @@ data class UserEntity(
 
     @Id
     @Column(name = "id", unique = true)
-    val id: String,
+    val id: String? = null,
 
-    @Column(name = "name")  // UNIQUE 제약 추가!
-    val name: String,
+    @Column(name = "name")
+    val name: String? = null,
 
     @Column(name = "age")
-    val age: Int?
-){
-    constructor(): this("", "", null)
-}
+    val age: Int? = null
+)

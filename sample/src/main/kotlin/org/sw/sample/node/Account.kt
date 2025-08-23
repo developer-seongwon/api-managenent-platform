@@ -1,4 +1,4 @@
-package org.sw.sample.api.user.node
+package org.sw.sample.node
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.core.JsonParser
@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(name = "회원 계정 정보")
+@JsonDeserialize(using = Account.Deserializer::class)
 data class Account(
     @Schema(name = "회원 아이디")
     val id: String? = null,
@@ -19,9 +20,8 @@ data class Account(
     val age: Int? = null
 ) {
 
-    class AccountDeserializer : JsonDeserializer<Account>() {
+    class Deserializer : JsonDeserializer<Account>() {
         override fun deserialize(parser: JsonParser?, context: DeserializationContext?): Account? {
-            // validate-null
             return context?.let { c -> parser?.let { p -> parser(p, c) } }
         }
 
@@ -31,7 +31,6 @@ data class Account(
             val id = extractString(node, "id", parser)
             val name = extractString(node, "name", parser)
             val age = extractInt(node, "age", parser)
-
             return Account(id, name, age)
         }
 

@@ -1,9 +1,9 @@
-package org.sw.api.user.http.data
+package org.sw.sample.api.user.http.data
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import org.sw.api.sample.api.user.node.Account
+import org.sw.sample.node.Account
 
-class UserReadRequest(
+data class UserDeleteResponse(
     @JsonProperty("account")
     val account: Account? = null
 )

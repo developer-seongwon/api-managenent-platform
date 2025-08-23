@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.sw.sample.api.user.http.data.UserCreateRequest
 import org.sw.sample.api.user.http.data.UserCreateResponse
+import org.sw.sample.api.user.http.data.UserDeleteRequest
+import org.sw.sample.api.user.http.data.UserDeleteResponse
 import org.sw.sample.api.user.http.data.UserReadRequest
 import org.sw.sample.api.user.http.data.UserReadResponse
 
@@ -63,48 +65,36 @@ interface UserSpec {
             )
         ]
     )
-    fun readUsers(@RequestBody request: UserReadRequest): ResponseEntity<UserReadResponse>
+    fun readUsers(@RequestBody request: UserReadRequest?): ResponseEntity<UserReadResponse>
 
-//    @Operation(
-//        summary = "회원 조회",
-//        description = "아이디를 사용하여 회원 정보를 조회합니다.",
-//        parameters = [Parameter(
-//            `in` = ParameterIn.HEADER,
-//            name = "content-type",
-//            required = true,
-//            schema = Schema(type = "string", allowableValues = arrayOf("application/json")),
-//        ),
-//            Parameter(
-//                `in` = ParameterIn.PATH,
-//                name = "id",
-//                required = true
-//            )
-//        ]
-//    )
-//    @ApiResponses(
-//        value = [
-//            ApiResponse(
-//                responseCode = "200", description = "회원 조회 성공",
-//                content = [Content(
-//                    mediaType = "application/json",
-//                    schema = Schema(implementation = UserCreateResponse::class)
-//                )]
-//            ),
-//            ApiResponse(
-//                responseCode = "404", description = "요청한 데이터를 찾을 수 없습니다.",
-//                content = [Content(
-//                    mediaType = "application/json", schema = Schema(implementation = InternalServerError::class)
-//                )]
-//            ),
-//            ApiResponse(
-//                responseCode = "500", description = "내부 서버 오류",
-//                content = [Content(
-//                    mediaType = "application/json", schema = Schema(implementation = InternalServerError::class)
-//                )]
-//            )
-//        ]
-//    )
-//    fun readUser(@PathVariable id: String): ResponseEntity<UserReadResponse>
+    @Operation(
+        summary = "회원 조회",
+        description = "아이디를 사용하여 회원 정보를 조회합니다.",
+        parameters = [Parameter(
+            `in` = ParameterIn.HEADER,
+            name = "content-type",
+            required = true,
+            schema = Schema(type = "string", allowableValues = arrayOf("application/json")),
+        ),
+            Parameter(
+                `in` = ParameterIn.PATH,
+                name = "id",
+                required = true
+            )
+        ]
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "회원 조회 성공",
+                content = [Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = UserCreateResponse::class)
+                )]
+            )
+        ]
+    )
+    fun readUser(@PathVariable id: String): ResponseEntity<UserReadResponse>
 
     @Operation(
         summary = "회원 등록",
@@ -135,4 +125,34 @@ interface UserSpec {
         @PathVariable id: String,
         @RequestBody request: UserCreateRequest
     ): ResponseEntity<UserCreateResponse>
+
+    @Operation(
+        summary = "회원 삭제",
+        description = "회원 정보를 삭제합니다.",
+        parameters = [Parameter(
+            `in` = ParameterIn.HEADER,
+            name = "content-type",
+            required = true,
+            schema = Schema(type = "string", allowableValues = arrayOf("application/json")),
+        ), Parameter(
+            `in` = ParameterIn.PATH,
+            name = "id",
+            required = true,
+            schema = Schema(type = "string")
+        )]
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "회원 삭제 성공",
+                content = [Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = UserCreateResponse::class)
+                )]
+            )]
+    )
+    fun deleteUser(
+        @PathVariable id: String,
+        @RequestBody request: UserDeleteRequest
+    ): ResponseEntity<UserDeleteResponse>
 }

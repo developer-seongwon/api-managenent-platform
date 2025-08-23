@@ -12,6 +12,11 @@ class CommonException(
 ) : Exception(cause) {
 
     companion object {
+
+        fun notFound(cause: Throwable? = null, block: Builder.() -> Unit): CommonException {
+            return Builder(HttpStatus.NOT_FOUND, cause).apply(block).build()
+        }
+
         fun conflict(cause: Throwable? = null, block: Builder.() -> Unit): CommonException {
             return Builder(HttpStatus.CONFLICT, cause).apply(block).build()
         }
