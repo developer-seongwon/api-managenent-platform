@@ -1,10 +1,9 @@
-package org.sw.sample.api.user.service
+package org.sw.sample.api.user
 
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 import org.sw.sample.api.CommonException
-import org.sw.sample.api.user.repository.UserRepository
-import org.sw.sample.api.user.repository.entity.UserEntity
+import org.sw.sample.api.user.entity.UserEntity
 import org.sw.sample.node.Account
 
 @Service
@@ -54,7 +53,7 @@ class UserService(
     fun deleteUser(account: Account): Account {
         val users = convertTo(account).let { this.repository.getUsers(it) }.toMutableList()
         if (users.isEmpty()) {
-            throw CommonException.Companion.notFound{
+            throw CommonException.Companion.notFound {
                 title = "Not Found User"
                 detail = "not found user id: ${account.id}"
             }
@@ -66,7 +65,7 @@ class UserService(
         return this.repository.deleteUser(user)
             .let {
                 when (it) {
-                    0L -> throw CommonException.Companion.notFound() {
+                    0L -> throw CommonException.Companion.notFound {
                         title = "Not Found User"
                         detail = "not found user id: ${account.id}"
                     }

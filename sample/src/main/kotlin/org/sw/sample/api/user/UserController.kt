@@ -1,4 +1,4 @@
-package org.sw.sample.api.user.http
+package org.sw.sample.api.user
 
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.http.ResponseEntity
@@ -8,15 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.sw.sample.api.user.UserSpec
-import org.sw.sample.api.user.http.data.UserCreateRequest
-import org.sw.sample.api.user.http.data.UserCreateResponse
-import org.sw.sample.api.user.http.data.UserDeleteRequest
-import org.sw.sample.api.user.http.data.UserDeleteResponse
-import org.sw.sample.api.user.http.data.UserReadRequest
-import org.sw.sample.api.user.http.data.UserReadResponse
+import org.sw.sample.api.user.dto.UserCreateRequest
+import org.sw.sample.api.user.dto.UserCreateResponse
+import org.sw.sample.api.user.dto.UserDeleteRequest
+import org.sw.sample.api.user.dto.UserDeleteResponse
+import org.sw.sample.api.user.dto.UserReadRequest
+import org.sw.sample.api.user.dto.UserReadResponse
 import org.sw.sample.node.Account
-import org.sw.sample.api.user.service.UserService
 
 @RestController
 @RequestMapping("/users")

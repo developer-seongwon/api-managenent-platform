@@ -1,4 +1,4 @@
-package org.sw.sample.api.user.http.data
+package org.sw.sample.api.user.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema

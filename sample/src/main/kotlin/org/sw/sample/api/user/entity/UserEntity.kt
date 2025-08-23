@@ -1,4 +1,4 @@
-package org.sw.sample.api.user.repository.entity
+package org.sw.sample.api.user.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
