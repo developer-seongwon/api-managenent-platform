@@ -17,6 +17,8 @@ import org.sw.sample.api.user.dto.UserDeleteRequest
 import org.sw.sample.api.user.dto.UserDeleteResponse
 import org.sw.sample.api.user.dto.UserReadRequest
 import org.sw.sample.api.user.dto.UserReadResponse
+import org.sw.sample.api.user.dto.UserUpdateRequest
+import org.sw.sample.api.user.dto.UserUpdateResponse
 
 @Tag(name = "User API", description = "회원 관련 API")
 interface UserSpec {
@@ -155,4 +157,34 @@ interface UserSpec {
         @PathVariable id: String,
         @RequestBody request: UserDeleteRequest
     ): ResponseEntity<UserDeleteResponse>
+
+    @Operation(
+        summary = "회원 갱신",
+        description = "회원 정보를 갱신합니다.",
+        parameters = [Parameter(
+            `in` = ParameterIn.HEADER,
+            name = "content-type",
+            required = true,
+            schema = Schema(type = "string", allowableValues = arrayOf("application/json")),
+        ), Parameter(
+            `in` = ParameterIn.PATH,
+            name = "id",
+            required = true,
+            schema = Schema(type = "string")
+        )]
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "회원 갱신 성공",
+                content = [Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = UserUpdateResponse::class)
+                )]
+            )]
+    )
+    fun updateUser(
+        @PathVariable id: String,
+        @RequestBody request: UserUpdateRequest
+    ): ResponseEntity<UserUpdateResponse>
 }

@@ -15,8 +15,8 @@ data class UserEntity(
     val id: String? = null,
 
     @Column(name = "name")
-    val name: String? = null,
+    var name: String? = null,
 
     @Column(name = "age")
-    val age: Int? = null
+    var age: Int? = null
 )

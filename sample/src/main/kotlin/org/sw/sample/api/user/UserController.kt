@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.sw.sample.api.user.dto.UserCreateRequest
@@ -14,6 +15,8 @@ import org.sw.sample.api.user.dto.UserDeleteRequest
 import org.sw.sample.api.user.dto.UserDeleteResponse
 import org.sw.sample.api.user.dto.UserReadRequest
 import org.sw.sample.api.user.dto.UserReadResponse
+import org.sw.sample.api.user.dto.UserUpdateRequest
+import org.sw.sample.api.user.dto.UserUpdateResponse
 import org.sw.sample.node.Account
 
 @RestController
@@ -72,5 +75,14 @@ class UserController(
                     .contentType(APPLICATION_JSON)
                     .body(UserDeleteResponse(account = it))
             }
+    }
+
+    @PutMapping("/{id}")
+    override fun updateUser(
+        @PathVariable id: String, request: UserUpdateRequest
+    ): ResponseEntity<UserUpdateResponse> {
+        return (request.account?.let { it -> Account(id = id, it.name, it.age) } ?: Account(id = id))
+            .let { this.service.updateUser(it) }
+            .let { ResponseEntity.status(200).contentType(APPLICATION_JSON).body(UserUpdateResponse(account = it)) }
     }
 }

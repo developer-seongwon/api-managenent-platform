@@ -27,6 +27,14 @@ class UserRepository(
             .fetch();
     }
 
+    fun getUser(filter: UserEntity): UserEntity? {
+        return JPAQueryFactory(this.manager)
+            .select(QUserEntity.userEntity)
+            .from(QUserEntity.userEntity)
+            .where(QUserEntity.userEntity.id.eq(filter.id))
+            .fetchOne();
+    }
+
     @Transactional
     fun createUser(user: UserEntity): UserEntity {
         this.manager.persist(user);
@@ -41,5 +49,9 @@ class UserRepository(
             .execute();
     }
 
+    @Transactional
+    fun updateUser(callback: () -> UserEntity): UserEntity {
+        return callback.invoke();
+    }
 
 }

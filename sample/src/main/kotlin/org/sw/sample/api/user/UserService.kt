@@ -18,19 +18,7 @@ class UserService(
     }
 
     fun readUser(account: Account): Account {
-        val users = account.let { convertTo(it) }
-            .let { this.repository.getUsers(it) }
-        when (users.size) {
-            0 -> throw CommonException.Companion.notFound() {
-                title = "Not Found User"
-                detail = "not found user id: ${account.id}"
-            }
-            1 -> return convertTo(users[0])
-            else -> throw CommonException.Companion.conflict() {
-                title = "Conflict User"
-                detail = "conflict user id: ${account.id}"
-            }
-        }
+        return convertTo(getUserInRepository(convertTo(account)))
     }
 
     fun createUser(account: Account): Account {
@@ -69,9 +57,27 @@ class UserService(
                         title = "Not Found User"
                         detail = "not found user id: ${account.id}"
                     }
+
                     else -> convertTo(user)
                 }
             }
+    }
+
+    fun updateUser(account: Account): Account {
+        val user = getUserInRepository(convertTo(account))
+        return this.repository.updateUser {
+            account.name?.let { it -> user.name = it }
+            account.age?.let { it -> user.age = it }
+            user
+        }.let { convertTo(it) }
+    }
+
+
+    private fun getUserInRepository(user: UserEntity): UserEntity {
+        return this.repository.getUser(user) ?: throw CommonException.Companion.notFound() {
+            title = "Not Found User"
+            detail = "not found user id: ${user.id}"
+        }
     }
 
     fun convertTo(user: UserEntity): Account {
