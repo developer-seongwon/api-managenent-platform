@@ -65,11 +65,10 @@ class UserService(
 
     fun updateUser(account: Account): Account {
         val user = getUserInRepository(convertTo(account))
-        return this.repository.updateUser {
-            account.name?.let { it -> user.name = it }
-            account.age?.let { it -> user.age = it }
-            user
-        }.let { convertTo(it) }
+        account.name?.let { it -> user.name = it }
+        account.age?.let { it -> user.age = it }
+
+        return this.repository.update { user }.let { convertTo(it) }
     }
 
 

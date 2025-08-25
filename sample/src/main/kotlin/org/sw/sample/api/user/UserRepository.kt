@@ -50,7 +50,7 @@ class UserRepository(
     }
 
     @Transactional
-    fun updateUser(callback: () -> UserEntity): UserEntity {
+    fun <T> update(callback: () -> T): T {
         return callback.invoke();
     }
 
