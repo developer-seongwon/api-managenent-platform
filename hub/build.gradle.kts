@@ -1,21 +1,20 @@
 plugins {
 	kotlin("jvm") version "1.9.25"
+	kotlin("kapt") version "1.9.25"
 	kotlin("plugin.spring") version "1.9.25"
+	kotlin("plugin.jpa") version "1.9.25"
 	id("org.springframework.boot") version "3.5.5"
 	id("io.spring.dependency-management") version "1.1.7"
-	kotlin("plugin.jpa") version "1.9.25"
 }
 
 group = "org.sw"
 version = "0.0.1-SNAPSHOT"
 description = "hub"
-
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
-
 repositories {
 	mavenCentral()
 }
@@ -29,6 +28,10 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	// https://mvnrepository.com/artifact/io.swagger.parser.v3/swagger-parser
+	implementation("io.swagger.parser.v3:swagger-parser:2.1.32")
+	// Kotlin의 경우
+	kapt("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 kotlin {
